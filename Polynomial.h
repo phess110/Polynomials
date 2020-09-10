@@ -17,8 +17,10 @@ private:
         Reverses the coefficients of the polynomial.
         Equivalent to computing x^n * p(1/x)
     */
-    // void ReversePolynomial(const Polynomial &); 
+    void ReversePolynomial(const Polynomial &); 
 public:
+    typedef std::pair<Polynomial, Polynomial> PolyPair;
+
     /* Constructor 
         Param [in]: vector A, the polynomial's coefficients: p(x) = sum a_n x^n.
     */
@@ -27,11 +29,17 @@ public:
     /* Copy Constructor */
     Polynomial(const Polynomial &);
 
+    /* Move Constructor */
+    Polynomial(const Polynomial &&p) noexcept;
+
     /* Polynomial Multiplication via FFT
         param[in]: p, q
-        return: the polynomial p(x) * q(x) 
+        param[in]: pow1, the power on p
+        param[in]: pow2, the power on q
+        return: the polynomial p(x)^pow1 * q(x)^pow2
     */
-    static Polynomial PolyMult(const Polynomial &, const Polynomial &);
+    static Polynomial PolyMult(const Polynomial &, const Polynomial &, 
+                                uint8_t pow1 = 1, uint8_t pow2 = 1);
 
     /* Compute the power series of the inverse of the polynomial to desired number of terms 
         param[in]: polynomial p to be inverted
@@ -41,12 +49,22 @@ public:
     */
     static Polynomial PolyInverse(const Polynomial &, uint32_t);
 
+    /* Polynomial operator overloads */
+    Polynomial operator*(const double &d);
+    Polynomial operator*(const Polynomial &p);
+    Polynomial::PolyPair operator/(const Polynomial &q);
+    Polynomial operator-(const Polynomial &q);
+    Polynomial operator+(const Polynomial &q);
+
+    /* Move assignment operator */
+    Polynomial &operator=(Polynomial &&other) noexcept;
+
     /* Polynomial Division
 
         param[in]: f, g 
         return: two polynomials, q(x) and r(x), such that f(x) = q(x)g(x) + r(x) 
      */
-    static std::pair<Polynomial, Polynomial> PolyDiv(const Polynomial &, const Polynomial &);
+    static PolyPair PolyDiv(const Polynomial &, const Polynomial &);
 
     /*  Compute the Lagrange Coefficients 
         

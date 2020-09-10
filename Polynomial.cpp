@@ -1,33 +1,12 @@
+#include <iostream>       // std::cout
+#include <future>         // std::async, std::future
 #include <vector>
 
 #include "Polynomial.h"
 
-#include <iostream>       // std::cout
-#include <future>         // std::async, std::future
 #include <chrono>         // std::chrono::milliseconds
 
-// async test
-bool is_prime(int x) {
-    std::cout << std::this_thread::get_id() << std::endl;
-    for (int i = 2; i < x; ++i) if (x % i == 0) return false;
-    return true;
-}
-
-// test async stuff
-void test() {  
-    std::future<bool> fut = std::async(std::launch::async, is_prime, 1000000241);
-    std::future<bool> fut2 = std::async(std::launch::async, is_prime, 1000000207);
-    std::cout << "checking...\n";
-
-    fut.wait();
-    fut2.wait();
-
-    std::cout << fut.get() << std::endl;
-    std::cout << fut2.get() << std::endl;
-}
-
 int main() {
-    //std::cout << std::this_thread::get_id() << std::endl;
     //auto t1 = std::chrono::high_resolution_clock::now();
     //test();
     //auto t2 = std::chrono::high_resolution_clock::now();
@@ -37,9 +16,14 @@ int main() {
     //std::cout << duration << std::endl;
     //std::cout << std::this_thread::get_id() << std::endl;
 
-    Polynomial p = Polynomial({ 0,0,0,1 });
-    Polynomial q = Polynomial({ 0,0,0,1 });
-    Polynomial r = Polynomial::PolyMult(p, q);
+    Polynomial p = Polynomial({1,1,1,1,-1});
+    //Polynomial q = Polynomial({1,2,3,4,5,6,7});
+    p.Print();
+    //std::cout << "*\n";
+    //q.Print();
+    //std::cout << "=\n";
+    Polynomial r = Polynomial::PolyInverse(p, 8);
+    r.Print();
     return 0;
 }
 
@@ -49,6 +33,7 @@ Polynomial::Polynomial(const std::vector<double> &A) : m_degree(A.size() - 1) { 
 
 Polynomial::Polynomial(const Polynomial &p) : m_degree(p.m_degree) {
     m_coeffs = std::vector<double>(p.m_coeffs);
+    std::cout << "Copied\n";
 }
 
 std::vector<cd> Polynomial::PolyMultHelper(const Polynomial &p, uint32_t N) {
@@ -61,43 +46,152 @@ std::vector<cd> Polynomial::PolyMultHelper(const Polynomial &p, uint32_t N) {
     return FFT(p_coeffs);
 }
 
-Polynomial Polynomial::PolyMult(const Polynomial &p, const Polynomial &q) {
-    uint32_t N = pow2_round(p.m_degree + q.m_degree + 1);
+Polynomial Polynomial::PolyMult(const Polynomial &p, const Polynomial &q,
+                                uint8_t pow1, uint8_t pow2) {
+    uint32_t num_coeffs = pow1 * p.m_degree + pow2 * q.m_degree + 1;
+    uint32_t N = pow2_round(num_coeffs);
 
-    // Could be parallelized
-    std::vector<cd> pFFT = PolyMultHelper(p, N);
-    std::vector<cd> qFFT = PolyMultHelper(q, N);
+    // Parallelize FFT computation on p and q
+    std::future<std::vector<cd>> f1 = std::async(PolyMultHelper, p, N);
+    std::future<std::vector<cd>> f2 = std::async(PolyMultHelper, q, N);
+    f1.wait();
+    f2.wait();
+    std::vector<cd> pFFT = f1.get();
+    std::vector<cd> qFFT = f2.get();
     
-    // Take the Hadamard product
+    // Compute r = p^pow1 * q^pow2 on primitive N-th roots of unity
     for (uint32_t i = 0; i < N; i++) {
-        pFFT[i] *= qFFT[i];
+        pFFT[i] = std::pow(pFFT[i], pow1) * std::pow(qFFT[i], pow2);
     }
 
-    // Use IFFT to recover product coeffs
+    // Use IFFT to recover product coeffs of r
     std::vector<cd> out = InverseFFT(pFFT);
-    std::vector<double> out_real(N);
-    std::transform(out.begin(), out.end(), out_real.begin(), [](cd x) { return std::real(x); });
+    std::vector<double> out_real(num_coeffs);
+    /*
+        Since we started with a real polynomial, the IFFT should have no imaginary part.
+        Due to lack of precision, the imaginary part may be nonzero, but we can safely ignore it.
+
+        We need a reliable way of hiding the imprecision in the real part. 
+        Currently, I just add and then subtract 10 to truncate any really small errors. 
+    */
+    std::transform( out.begin(), 
+                    out.begin() + num_coeffs, 
+                    out_real.begin(), 
+                    [](cd x) { return (std::real(x) + 10) - 10; });
     return Polynomial(out_real);
 }
 
 Polynomial Polynomial::PolyInverse(const Polynomial &p, uint32_t t) {
     uint32_t m = 1;
 
-    // TODO check leading coeff is nonzero
+    // TODO throw exception???
+    if (p.m_coeffs[0] == 0) {
+        // error
+
+        return Polynomial({ 0 });
+    }
 
     Polynomial inv = Polynomial({ 1 / p.m_coeffs[0] });
     while (m < t) {
         m <<= 1;
-        // TODO 
         // inv = 2 * inv - A * inv^2
+        inv = (inv * 2) - PolyMult(p, inv, 1, 2);
+        // TODO Compute inv %= x^{m}
     }
 
     return inv;
 }
 
-std::pair<Polynomial, Polynomial> Polynomial::PolyDiv(const Polynomial &f, const Polynomial &g) {
+/*
+    TODO
+    Update all functions to ignore terms with too high degree
+*/
 
-    return std::pair<Polynomial, Polynomial>(f, g); // TODO 
+Polynomial Polynomial::operator*(const double& d) {
+    std::vector<double> result(m_degree + 1);
+
+    std::transform( m_coeffs.begin(),
+                    m_coeffs.end(),
+                    result.begin(),
+                    [d](double x) { return d * x; });
+    return Polynomial(result);
+}
+
+Polynomial Polynomial::operator*(const Polynomial &p) {
+    return PolyMult(*this, p);
+}
+
+Polynomial::PolyPair Polynomial::operator/(const Polynomial &q) {
+    return PolyDiv(*this, q);
+}
+
+Polynomial Polynomial::operator-(const Polynomial &q) {
+    uint32_t degree = std::max(m_degree, q.m_degree);
+
+    std::vector<double> result(degree + 1);
+    double c, d;
+    for (uint32_t i = 0; i < degree + 1; i++) {
+        c = (m_degree < i) ? 0 : m_coeffs[i];
+        d = (q.m_degree < i) ? 0 : q.m_coeffs[i];
+        result[i] = c - d;
+    }
+
+    return Polynomial(result);
+}
+
+Polynomial Polynomial::operator+(const Polynomial &q) {
+    uint32_t degree = std::max(m_degree, q.m_degree);
+
+    std::vector<double> result(degree + 1);
+    double c, d;
+    for (uint32_t i = 0; i < degree + 1; i++) {
+        c = (m_degree < i) ? 0 : m_coeffs[i];
+        d = (q.m_degree < i) ? 0 : q.m_coeffs[i];
+        result[i] = c + d;
+    }
+
+    return Polynomial(result);
+}
+
+Polynomial::Polynomial(const Polynomial &&p) noexcept : 
+    m_degree(std::move(p.m_degree)),
+    m_coeffs(std::move(p.m_coeffs)) { std::cout << "Move construct\n"; }
+
+Polynomial & Polynomial::operator=(Polynomial &&other) noexcept {
+    if (this != &other) {
+        m_degree = std::move(other.m_degree);
+        m_coeffs = std::move(other.m_coeffs);
+    }
+    std::cout << "Move assign\n";
+    return *this;
+}
+
+// TODO implement operator overloads
+/*
+    1. Scalar multiplication
+    2. Polynomial addition
+    3. Polynomial subtraction
+    4. Polynomial multiplication
+    5. Polynomial division
+    6. Move constructor
+    7. Move assignment op
+*/
+
+Polynomial::PolyPair Polynomial::PolyDiv(const Polynomial &f, const Polynomial &g) {
+    // TODO
+/*
+    uint32_t N = f.m_degree - g.m_degree + 1;
+    Polynomial fR = PolyReverse(f);
+    Polynomial gR = PolyReverse(g);
+
+    Polynomial qR = PolyMult(fR, PolyInverse(gR, ))
+
+    Polynomial q = reverse(qR)
+    Polynomial r = f - q * g;
+    return std::pair<Polynomial, Polynomial>(q, r);
+*/
+
+    return std::pair<Polynomial, Polynomial>(f, g);
 }
 
 std::vector<double> Polynomial::PolyInterpolate(const std::vector<PtValPair> &points) {
@@ -138,6 +232,7 @@ double Polynomial::PolyEval(double x) const {
 }
 
 void Polynomial::PolyDifferentiate() {
+    // TODO update m_coeff size  -> remove last entry
     for (uint32_t i = 0; i < m_degree; i++) {
         m_coeffs[i] = (static_cast<double>(i) + 1) * m_coeffs[i + 1];
     }
@@ -170,5 +265,5 @@ void Polynomial::Print() const {
     for (uint32_t i = 0; i < m_degree; i++) {
         std::cout << m_coeffs[i] << "x^" << i << " + ";
     }
-    std::cout << m_coeffs[m_degree] << "x^" << m_degree;
+    std::cout << m_coeffs[m_degree] << "x^" << m_degree << std::endl;
 }
