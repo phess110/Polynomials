@@ -229,22 +229,31 @@ std::vector<double> Polynomial::PolyInterpolate(const std::vector<PtValPair> &po
 }
 
 Polynomial Polynomial::PolyDerivative(const Polynomial &p) {
-    // TODO update this to handle case where degree is 0
-    std::vector<double> deriv(p.m_degree);
-    for (uint32_t i = 0; i < p.m_degree; i++) {
-        deriv[i] = (static_cast<double>(i) + 1) * p[i + 1];
+    if (p.m_degree == 0) {
+        return Polynomial({ 0 });
     }
+    else {
+        std::vector<double> deriv(p.m_degree);
+        for (uint32_t i = 0; i < p.m_degree; i++) {
+            deriv[i] = (static_cast<double>(i) + 1) * p[i + 1];
+        }
 
-    return Polynomial(deriv); 
+        return Polynomial(deriv);
+    }
 }
 
 double Polynomial::PolyEval(double x) const {
-    double p = m_coeffs[m_degree] * x;
-    for (uint32_t i = m_degree - 1; i > 0; i--) {
-        p += m_coeffs[i];
-        p *= x;
+    if (m_degree == 0) {
+        return m_coeffs[0];
     }
-    return m_coeffs[0] + p;
+    else {
+        double p = m_coeffs[m_degree] * x;
+        for (uint32_t i = m_degree - 1; i > 0; i--) {
+            p += m_coeffs[i];
+            p *= x;
+        }
+        return m_coeffs[0] + p;
+    }
 }
 
 void Polynomial::PolyDifferentiate() {
