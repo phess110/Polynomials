@@ -6,7 +6,7 @@
 typedef std::complex<double> cd;
 const double PI = 3.1415926535897932384626;
 const double TAU = 6.283185307179586476925;
-const double epsilon = 1e-14;
+const double epsilon = 1e-6;
 
 typedef struct PtValPair {
     double x;
@@ -18,6 +18,9 @@ typedef struct PtValPair {
 
 /* Rounds i up to nearest power of 2 */
 uint32_t pow2_round(uint32_t i);
+
+/* If x is within epsilon of an integer, round x */
+double roundError(double x);
 
 /* 
     Reverse the bits of v. 

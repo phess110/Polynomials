@@ -7,6 +7,16 @@ uint32_t pow2_round(uint32_t i) {
         1 << static_cast<int> (std::ceil(std::log2(i)));
 }
 
+double roundError(double x) {
+    double r = std::round(x);
+    if (std::abs(x - r) < epsilon) {
+        return r;
+    }
+    else {
+        return x;
+    }
+}
+
 uint32_t bit_reverse(uint32_t v, uint32_t s) {
     uint32_t r = v & 1;
     s--;
