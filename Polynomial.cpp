@@ -18,10 +18,12 @@ int main() {
     Polynomial p = Polynomial({1,1,1,1,-1});
     //Polynomial q = Polynomial({1,2,3,4,5,6,7});
     p.Print();
+    p.PolyDifferentiate();
+    p.Print();
     //std::cout << "*\n";
     //q.Print();
     //std::cout << "=\n";
-    Polynomial r = Polynomial::PolyInverse(p, 8);
+    Polynomial r = Polynomial::PolyDerivative(p);
     r.Print();
     return 0;
 }
@@ -88,8 +90,8 @@ Polynomial Polynomial::PolyMult(const Polynomial &p, const Polynomial &q,
     uint32_t N = pow2_round(num_coeffs);
 
     // Parallelize FFT computation on p and q
-    std::future<std::vector<cd>> f1 = std::async(PolyMultHelper, p, N);
-    std::future<std::vector<cd>> f2 = std::async(PolyMultHelper, q, N);
+    std::future<std::vector<cd>> f1 = std::async(PolyMultHelper, std::cref(p), N);
+    std::future<std::vector<cd>> f2 = std::async(PolyMultHelper, std::cref(q), N);
     f1.wait();
     f2.wait();
     std::vector<cd> pFFT = f1.get();
