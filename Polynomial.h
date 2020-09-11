@@ -24,7 +24,11 @@ private:
         Reverses the coefficients of the polynomial.
         Equivalent to computing x^n * p(1/x)
     */
-    void ReversePolynomial(const Polynomial &); 
+    static Polynomial ReversePolynomial(const Polynomial &); 
+
+    /* TODO 
+        if |coeff - nearest integer| < 10^-5 -> make the coefficient the nearest integers
+    */
 public:
     typedef std::pair<Polynomial, Polynomial> PolyPair;
 
@@ -57,11 +61,12 @@ public:
     static Polynomial PolyInverse(const Polynomial &, uint32_t);
 
     /* Polynomial operator overloads */
-    Polynomial operator*(const double &d);
-    Polynomial operator*(const Polynomial &p);
-    Polynomial::PolyPair operator/(const Polynomial &q);
-    Polynomial operator-(const Polynomial &q);
-    Polynomial operator+(const Polynomial &q);
+    Polynomial operator*(const double &d) const;
+    Polynomial operator*(const Polynomial &p) const;
+    Polynomial::PolyPair operator/(const Polynomial &q) const;
+    Polynomial operator-(const Polynomial &q) const;
+    Polynomial operator+(const Polynomial &q) const;
+    double operator[](const size_t &i) const;
 
     /* Move assignment operator */
     Polynomial &operator=(Polynomial &&other) noexcept;

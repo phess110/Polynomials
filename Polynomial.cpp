@@ -35,6 +35,43 @@ Polynomial::Polynomial(const Polynomial &p) : m_degree(p.m_degree) {
     std::cout << "Copied\n";
 }
 
+Polynomial::Polynomial(const Polynomial &&p) noexcept :
+    m_degree(std::move(p.m_degree)),
+    m_coeffs(std::move(p.m_coeffs)) {
+    std::cout << "Move construct\n";
+}
+
+Polynomial &Polynomial::operator=(Polynomial &&other) noexcept {
+    if (this != &other) {
+        m_degree = std::move(other.m_degree);
+        m_coeffs = std::move(other.m_coeffs);
+    }
+    std::cout << "Move assign\n";
+    return *this;
+}
+
+Polynomial Polynomial::ReversePolynomial(const Polynomial &p) {
+    uint32_t N = p.m_degree + 1;
+    std::vector<double> rev(N);
+    uint32_t endZeros = 0;
+    double d;
+    for (uint32_t i = 0; i < N; i++) {
+        d = p[N - i - 1];
+        rev[i] = d;
+        if (d == 0) {
+            endZeros++;
+        }
+        else {
+            endZeros = 0;
+        }
+    }
+
+    rev.resize(N - endZeros);
+    return Polynomial(rev);
+}
+
+// todo overload [] operator on p
+
 std::vector<cd> Polynomial::PolyMultHelper(const Polynomial &p, uint32_t N) {
     std::vector<double> p_coeffs(p.m_coeffs);
     
@@ -84,13 +121,13 @@ Polynomial Polynomial::PolyInverse(const Polynomial &p, uint32_t t) {
     uint32_t m = 1;
 
     // TODO throw exception???
-    if (p.m_coeffs[0] == 0) {
+    if (p[0] == 0) {
         // error
 
         return Polynomial({ 0 });
     }
 
-    Polynomial inv = Polynomial({ 1 / p.m_coeffs[0] });
+    Polynomial inv = Polynomial({ 1 / p[0] });
     while (m < t) {
         m <<= 1;
         // inv = 2 * inv - A * inv^2
@@ -104,10 +141,10 @@ Polynomial Polynomial::PolyInverse(const Polynomial &p, uint32_t t) {
 
 /*
     TODO
-    Update all functions to ignore terms with too high degree
+    Ensure all functions to ignore terms with too high degree
 */
 
-Polynomial Polynomial::operator*(const double& d) {
+Polynomial Polynomial::operator*(const double& d) const {
     std::vector<double> result(m_degree + 1);
 
     std::transform( m_coeffs.begin(),
@@ -117,81 +154,58 @@ Polynomial Polynomial::operator*(const double& d) {
     return Polynomial(result);
 }
 
-Polynomial Polynomial::operator*(const Polynomial &p) {
+Polynomial Polynomial::operator*(const Polynomial &p) const {
     return PolyMult(*this, p);
 }
 
-Polynomial::PolyPair Polynomial::operator/(const Polynomial &q) {
+Polynomial::PolyPair Polynomial::operator/(const Polynomial &q) const {
     return PolyDiv(*this, q);
 }
 
-Polynomial Polynomial::operator-(const Polynomial &q) {
+Polynomial Polynomial::operator-(const Polynomial &q) const {
     uint32_t degree = std::max(m_degree, q.m_degree);
 
     std::vector<double> result(degree + 1);
     double c, d;
     for (uint32_t i = 0; i < degree + 1; i++) {
         c = (m_degree < i) ? 0 : m_coeffs[i];
-        d = (q.m_degree < i) ? 0 : q.m_coeffs[i];
+        d = (q.m_degree < i) ? 0 : q[i];
         result[i] = c - d;
     }
 
     return Polynomial(result);
 }
 
-Polynomial Polynomial::operator+(const Polynomial &q) {
+Polynomial Polynomial::operator+(const Polynomial &q) const {
     uint32_t degree = std::max(m_degree, q.m_degree);
 
     std::vector<double> result(degree + 1);
     double c, d;
     for (uint32_t i = 0; i < degree + 1; i++) {
         c = (m_degree < i) ? 0 : m_coeffs[i];
-        d = (q.m_degree < i) ? 0 : q.m_coeffs[i];
+        d = (q.m_degree < i) ? 0 : q[i];
         result[i] = c + d;
     }
 
     return Polynomial(result);
 }
 
-Polynomial::Polynomial(const Polynomial &&p) noexcept : 
-    m_degree(std::move(p.m_degree)),
-    m_coeffs(std::move(p.m_coeffs)) { std::cout << "Move construct\n"; }
-
-Polynomial & Polynomial::operator=(Polynomial &&other) noexcept {
-    if (this != &other) {
-        m_degree = std::move(other.m_degree);
-        m_coeffs = std::move(other.m_coeffs);
-    }
-    std::cout << "Move assign\n";
-    return *this;
+double Polynomial::operator[](const size_t &i) const {
+    return m_coeffs[i];
 }
 
-// TODO implement operator overloads
-/*
-    1. Scalar multiplication
-    2. Polynomial addition
-    3. Polynomial subtraction
-    4. Polynomial multiplication
-    5. Polynomial division
-    6. Move constructor
-    7. Move assignment op
-*/
-
 Polynomial::PolyPair Polynomial::PolyDiv(const Polynomial &f, const Polynomial &g) {
-    // TODO
-/*
     uint32_t N = f.m_degree - g.m_degree + 1;
-    Polynomial fR = PolyReverse(f);
-    Polynomial gR = PolyReverse(g);
 
-    Polynomial qR = PolyMult(fR, PolyInverse(gR, ))
+    Polynomial fR = ReversePolynomial(f);
+    Polynomial gR = ReversePolynomial(g);
 
-    Polynomial q = reverse(qR)
-    Polynomial r = f - q * g;
+    Polynomial qR = PolyMult(fR, PolyInverse(gR, N));
+    // TODO write a method to reverse in-place
+    Polynomial q = ReversePolynomial(qR); // MODULO ?
+    Polynomial r = f - (q * g);
+
     return std::pair<Polynomial, Polynomial>(q, r);
-*/
-
-    return std::pair<Polynomial, Polynomial>(f, g);
 }
 
 std::vector<double> Polynomial::PolyInterpolate(const std::vector<PtValPair> &points) {
@@ -214,9 +228,10 @@ std::vector<double> Polynomial::PolyInterpolate(const std::vector<PtValPair> &po
 }
 
 Polynomial Polynomial::PolyDerivative(const Polynomial &p) {
+    // TODO update this to handle case where degree is 0
     std::vector<double> deriv(p.m_degree);
     for (uint32_t i = 0; i < p.m_degree; i++) {
-        deriv[i] = (static_cast<double>(i) + 1) * p.m_coeffs[i + 1];
+        deriv[i] = (static_cast<double>(i) + 1) * p[i + 1];
     }
 
     return Polynomial(deriv); 
