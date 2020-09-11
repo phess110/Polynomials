@@ -5,9 +5,9 @@
 class PolyValGenerator
 {
 private:
-    std::vector<double> inputs;
-    std::vector<double> outputs;
-    std::vector<double> L;
+    std::vector<double> m_inputs;
+    std::vector<double> m_outputs;
+    std::vector<double> m_L;
 
 public:
     PolyValGenerator(const std::vector<PtValPair> &);
