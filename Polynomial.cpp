@@ -249,11 +249,14 @@ double Polynomial::PolyEval(double x) const {
 }
 
 void Polynomial::PolyDifferentiate() {
-    // TODO update m_coeff size  -> remove last entry
     for (uint32_t i = 0; i < m_degree; i++) {
         m_coeffs[i] = (static_cast<double>(i) + 1) * m_coeffs[i + 1];
     }
     m_coeffs[m_degree] = 0;
+    if (m_degree > 0) {
+        m_degree--;
+        m_coeffs.pop_back();
+    }
 }
 
 double Polynomial::NewtonsMethod(double guess, double tolerance, uint32_t max_iters) {
