@@ -26,9 +26,6 @@ private:
     */
     static Polynomial ReversePolynomial(const Polynomial &); 
 
-    /* TODO 
-        if |coeff - nearest integer| < 10^-5 -> make the coefficient the nearest integers
-    */
 public:
     typedef std::pair<Polynomial, Polynomial> PolyPair;
 
@@ -60,17 +57,6 @@ public:
     */
     static Polynomial PolyInverse(const Polynomial &, uint32_t);
 
-    /* Polynomial operator overloads */
-    Polynomial operator*(const double &d) const;
-    Polynomial operator*(const Polynomial &p) const;
-    Polynomial::PolyPair operator/(const Polynomial &q) const;
-    Polynomial operator-(const Polynomial &q) const;
-    Polynomial operator+(const Polynomial &q) const;
-    double operator[](const size_t &i) const;
-
-    /* Move assignment operator */
-    Polynomial &operator=(Polynomial &&other) noexcept;
-
     /* Polynomial Division
 
         param[in]: f, g 
@@ -92,6 +78,17 @@ public:
 
     /* Returns the polynomial corresponding to the derivative of the input */
     static Polynomial PolyDerivative(const Polynomial &);
+
+    /* Polynomial operator overloads */
+    Polynomial operator*(const double &d) const;
+    Polynomial operator*(const Polynomial &p) const;
+    Polynomial::PolyPair operator/(const Polynomial &q) const;
+    Polynomial operator-(const Polynomial &q) const;
+    Polynomial operator+(const Polynomial &q) const;
+    double operator[](const size_t &i) const;
+
+    /* Move assignment operator */
+    Polynomial &operator=(Polynomial &&other) noexcept;
 
     /* Newton's Method for root finding. 
        param[in]: the initial guess for the root

@@ -15,10 +15,10 @@ int main() {
     //std::cout << duration << std::endl;
     //std::cout << std::this_thread::get_id() << std::endl;
 
-    Polynomial p = Polynomial({1,1,1,1,-1});
+    Polynomial p = Polynomial({-4,-2,1});
     //Polynomial q = Polynomial({1,2,3,4,5,6,7});
     p.Print();
-    p.PolyDifferentiate();
+    p.NewtonsMethod(-100, 1e-10);
     p.Print();
     //std::cout << "*\n";
     //q.Print();
@@ -71,8 +71,6 @@ Polynomial Polynomial::ReversePolynomial(const Polynomial &p) {
     rev.resize(N - endZeros);
     return Polynomial(rev);
 }
-
-// todo overload [] operator on p
 
 std::vector<cd> Polynomial::PolyMultHelper(const Polynomial &p, uint32_t N) {
     std::vector<double> p_coeffs(p.m_coeffs);
@@ -137,13 +135,12 @@ Polynomial Polynomial::PolyInverse(const Polynomial &p, uint32_t t) {
         inv.m_coeffs.resize(m);
         inv.m_degree = m - 1;
     }
-
     return inv;
 }
 
 /*
     TODO
-    Ensure all functions to ignore terms with too high degree
+    Ensure all functions ignore terms with too high degree
 */
 
 Polynomial Polynomial::operator*(const double& d) const {
