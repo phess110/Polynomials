@@ -97,7 +97,7 @@ public:
     */
     double NewtonsMethod(double, 
                          double tolerance = 1e-6, 
-                         uint32_t max_iters = 1e3);
+                         uint32_t max_iters = 1e3) const;
 
     /*
         Horner's method to evaluate polynomial at x.

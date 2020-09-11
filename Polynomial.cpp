@@ -267,7 +267,9 @@ void Polynomial::PolyDifferentiate() {
     }
 }
 
-double Polynomial::NewtonsMethod(double guess, double tolerance, uint32_t max_iters) {
+double Polynomial::NewtonsMethod(double guess, 
+                                double tolerance, 
+                                uint32_t max_iters) const {
     Polynomial deriv = PolyDerivative(*this);
 
     double x0 = guess, x1;
@@ -284,7 +286,8 @@ double Polynomial::NewtonsMethod(double guess, double tolerance, uint32_t max_it
         i++;
         x0 = x1;
     }
-
+    std::cout.precision(15);
+    std::cout << "After " << i << " iterations: " << x0 << std::endl;
     return x0;
 }
 
