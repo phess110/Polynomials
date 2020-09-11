@@ -13,7 +13,14 @@ private:
 
     static std::vector<cd> PolyMultHelper(const Polynomial &, uint32_t);
 
-    /* TODO
+    /* Proper Usage. ALL INPUT POLYNOMIALS SHOULD HAVE INTEGER COEFFICIENTS!
+        For a polynomial with rational coefficients: f(x) = p0/q0 + ... + p(n)/q(n) x^n
+        Find the common denominator: d = lcm(q0,...,q(n))
+        Write f as a polynomial with integer coefficients: f(x) = 1/d * (a0 + ... + a(n)x^n).
+        Perform desired operations on a0 + ... + a(n)x^n and then scale output by 1/d.
+    */
+
+    /* 
         Reverses the coefficients of the polynomial.
         Equivalent to computing x^n * p(1/x)
     */
@@ -87,7 +94,7 @@ public:
        param[in]: (optional) max_iters. Default value: 1000
     */
     double NewtonsMethod(double, 
-                         double tolerance = 1e-9, 
+                         double tolerance = 1e-6, 
                          uint32_t max_iters = 1e3);
 
     /*

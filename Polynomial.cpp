@@ -1,18 +1,17 @@
-#include <iostream>       // std::cout
+
 #include <future>         // std::async, std::future
+#include <iostream>       // std::cout
 #include <vector>
 
 #include "Polynomial.h"
+#include "Util.h"
 
 #include <chrono>         // std::chrono::milliseconds
 
 int main() {
     //auto t1 = std::chrono::high_resolution_clock::now();
-    //test();
     //auto t2 = std::chrono::high_resolution_clock::now();
-
     //auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
-
     //std::cout << duration << std::endl;
     //std::cout << std::this_thread::get_id() << std::endl;
 
@@ -77,7 +76,7 @@ Polynomial Polynomial::PolyMult(const Polynomial &p, const Polynomial &q,
     std::transform( out.begin(), 
                     out.begin() + num_coeffs, 
                     out_real.begin(), 
-                    [](cd x) { return (std::real(x) + 10) - 10; });
+                    [](cd x) { return roundError(std::real(x)); });
     return Polynomial(out_real);
 }
 
@@ -96,7 +95,8 @@ Polynomial Polynomial::PolyInverse(const Polynomial &p, uint32_t t) {
         m <<= 1;
         // inv = 2 * inv - A * inv^2
         inv = (inv * 2) - PolyMult(p, inv, 1, 2);
-        // TODO Compute inv %= x^{m}
+        inv.m_coeffs.resize(m);
+        inv.m_degree = m - 1;
     }
 
     return inv;
