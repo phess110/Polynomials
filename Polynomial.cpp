@@ -196,20 +196,22 @@ double Polynomial::operator[](const size_t &i) const {
     return m_coeffs[i];
 }
 
+// todo check
 Polynomial::PolyPair Polynomial::PolyDiv(const Polynomial &f, const Polynomial &g) {
     uint32_t N = f.m_degree - g.m_degree + 1;
-
     Polynomial fR = ReversePolynomial(f);
     Polynomial gR = ReversePolynomial(g);
 
     Polynomial qR = PolyMult(fR, PolyInverse(gR, N));
-    // TODO write a method to reverse in-place
-    Polynomial q = ReversePolynomial(qR); // MODULO ?
-    Polynomial r = f - (q * g);
+    qR.Reverse();
+    qR.m_coeffs.resize(N);
+    qR.m_degree = N - 1;
+    Polynomial r = f - (qR * g);
 
-    return std::pair<Polynomial, Polynomial>(q, r);
+    return PolyPair(qR, r);
 }
 
+// todo check
 std::vector<double> Polynomial::PolyInterpolate(const std::vector<PtValPair> &points) {
     uint32_t N = points.size();
     std::vector<double> L(N);
@@ -278,6 +280,14 @@ double Polynomial::NewtonsMethod(double guess, double tolerance, uint32_t max_it
     }
 
     return x0;
+}
+
+void Polynomial::Reverse() {
+    std::reverse(std::begin(m_coeffs), std::end(m_coeffs));
+    int i;
+    for (i = m_coeffs.size() - 1; i >= 1 && m_coeffs[i] == 0; i--);
+    m_coeffs.resize(i + 1);
+    m_degree = i;
 }
 
 

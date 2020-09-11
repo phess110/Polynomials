@@ -115,6 +115,9 @@ public:
     */
     void PolyDifferentiate();
 
+    /* Reverses coefficients of the polynomial */
+    void Reverse(); // TODO make private
+
     /* Prints the polynomial to stdout */
     void Print() const;
 
