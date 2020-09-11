@@ -1,5 +1,6 @@
 # Polynomials
-Multithreaded Polynomial Arithmetic Library 
+Multithreaded Polynomial Arithmetic Library:
+
     - Polynomial multiplication based on the FFT
     - Polynomial inversion
     - Polynomial division 
@@ -7,4 +8,4 @@ Multithreaded Polynomial Arithmetic Library
     - Newton's method for finding roots of polynomials
     - Polynomial interpolation (Lagrange)
 
-See 'README.pdf' for the mathematical exposition of all implemented algorithms.
+See ```README.pdf``` for the mathematical exposition of all implemented algorithms.
