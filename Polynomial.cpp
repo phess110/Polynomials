@@ -165,30 +165,46 @@ Polynomial::PolyPair Polynomial::operator/(const Polynomial &q) const {
 }
 
 Polynomial Polynomial::operator-(const Polynomial &q) const {
-    uint32_t degree = std::max(m_degree, q.m_degree);
+    uint32_t num_coeffs = std::max(m_degree, q.m_degree) + 1;
 
-    std::vector<double> result(degree + 1);
+    std::vector<double> result(num_coeffs);
     double c, d;
-    for (uint32_t i = 0; i < degree + 1; i++) {
+    uint8_t trailingZeros = 0;
+    for (uint32_t i = 0; i < num_coeffs; i++) {
         c = (m_degree < i) ? 0 : m_coeffs[i];
         d = (q.m_degree < i) ? 0 : q[i];
         result[i] = c - d;
+        if (result[i] == 0) {
+            trailingZeros++;
+        }
+        else {
+            trailingZeros = 0;
+        }
     }
 
+    result.resize(num_coeffs - trailingZeros);
     return Polynomial(result);
 }
 
 Polynomial Polynomial::operator+(const Polynomial &q) const {
-    uint32_t degree = std::max(m_degree, q.m_degree);
+    uint32_t num_coeffs = std::max(m_degree, q.m_degree) + 1;
 
-    std::vector<double> result(degree + 1);
+    std::vector<double> result(num_coeffs);
     double c, d;
-    for (uint32_t i = 0; i < degree + 1; i++) {
+    uint8_t trailingZeros = 0;
+    for (uint32_t i = 0; i < num_coeffs; i++) {
         c = (m_degree < i) ? 0 : m_coeffs[i];
         d = (q.m_degree < i) ? 0 : q[i];
         result[i] = c + d;
+        if (result[i] == 0) {
+            trailingZeros++;
+        }
+        else {
+            trailingZeros = 0;
+        }
     }
 
+    result.resize(num_coeffs - trailingZeros);
     return Polynomial(result);
 }
 
