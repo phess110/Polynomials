@@ -141,19 +141,19 @@ Polynomial Polynomial::PolyInverse(const Polynomial &p, uint32_t t) {
     return inv;
 }
 
-/*
-    TODO
-    Ensure all functions ignore terms with too high degree
-*/
-
 Polynomial Polynomial::operator*(const double& d) const {
-    std::vector<double> result(m_degree + 1);
+    if (d == 0) {
+        return Polynomial({ 0 });
+    }
+    else {
+        std::vector<double> result(m_degree + 1);
 
-    std::transform( m_coeffs.begin(),
-                    m_coeffs.end(),
-                    result.begin(),
-                    [d](double x) { return d * x; });
-    return Polynomial(result);
+        std::transform(m_coeffs.begin(),
+            m_coeffs.end(),
+            result.begin(),
+            [d](double x) { return d * x; });
+        return Polynomial(result);
+    }
 }
 
 Polynomial Polynomial::operator*(const Polynomial &p) const {
