@@ -125,15 +125,11 @@ Polynomial Polynomial::PolyMult(const Polynomial &p, const Polynomial &q,
 }
 
 Polynomial Polynomial::PolyInverse(const Polynomial &p, uint32_t t) {
-    uint32_t m = 1;
-
-    // TODO throw exception???
     if (p[0] == 0) {
-        // error
-
-        return Polynomial({ 0 });
+        throw "Inverse does not exist";
     }
 
+    uint32_t m = 1;
     Polynomial inv = Polynomial({ 1 / p[0] });
     while (m < t) {
         m <<= 1;
