@@ -28,8 +28,15 @@ int main() {
     return 0;
 }
 
-Polynomial::Polynomial(const std::vector<double> &A) : m_degree(A.size() - 1) { // TODO the vector should be nonempty!
-    m_coeffs = std::vector<double>(A);
+Polynomial::Polynomial(const std::vector<double> &A) { 
+    if (A.empty()) {
+        m_degree = 0;
+        m_coeffs = { 0 };
+    }
+    else {
+        m_degree = A.size() - 1;
+        m_coeffs = std::vector<double>(A);
+    }
 }
 
 Polynomial::Polynomial(const Polynomial &p) : m_degree(p.m_degree) {
