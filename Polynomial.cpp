@@ -212,16 +212,16 @@ double Polynomial::operator[](const size_t &i) const {
     return m_coeffs[i];
 }
 
-// todo check
 Polynomial::PolyPair Polynomial::PolyDiv(const Polynomial &f, const Polynomial &g) {
     uint32_t N = f.m_degree - g.m_degree + 1;
     Polynomial fR = ReversePolynomial(f);
     Polynomial gR = ReversePolynomial(g);
 
     Polynomial qR = PolyMult(fR, PolyInverse(gR, N));
-    qR.Reverse();
     qR.m_coeffs.resize(N);
     qR.m_degree = N - 1;
+    qR.Reverse();
+
     Polynomial r = f - (qR * g);
 
     return PolyPair(qR, r);
