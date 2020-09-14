@@ -1,8 +1,30 @@
 #include <algorithm>
+#include <chrono>         // std::chrono::milliseconds
 #include <vector>
 
 #include "PolyValGenerator.h"
+#include "Polynomial.h"
 #include "Util.h"
+
+int main() {
+    //auto t1 = std::chrono::high_resolution_clock::now();
+    //auto t2 = std::chrono::high_resolution_clock::now();
+    //auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+    //std::cout << duration << std::endl;
+    //std::cout << std::this_thread::get_id() << std::endl;
+
+    std::vector<PtValPair> v = { {1,2}, {2,3}, {5,7} };
+    PolyValGenerator p = PolyValGenerator(v);
+
+    std::cout << p.Eval(0.5) <<std::endl;
+    std::cout << p.Eval(3) << std::endl;
+    std::cout << p.Eval(4) << std::endl;
+    std::cout << p.Eval(-10) << std::endl;
+
+    //Polynomial::PolyPair r = Polynomial::PolyDiv(p, q);
+
+    return 0;
+}
 
 PolyValGenerator::PolyValGenerator(const std::vector<PtValPair> &A) {
     uint32_t N = A.size();
@@ -11,9 +33,17 @@ PolyValGenerator::PolyValGenerator(const std::vector<PtValPair> &A) {
         m_inputs.push_back(p.x);
         m_outputs.push_back(p.y);
     }
-
-    // TODO initialize L 
+    m_L = Polynomial::PolyInterpolate(A);
 }
+
+PolyValGenerator::PolyValGenerator(const PolyValGenerator &&p) noexcept :
+    m_inputs(std::move(p.m_inputs)),
+    m_outputs(std::move(p.m_outputs)),
+    m_L(std::move(p.m_L))
+{
+    std::cout << "Move construct\n";
+}
+
 
 double PolyValGenerator::Eval(double x) const {
     uint32_t N = m_inputs.size();

@@ -6,28 +6,6 @@
 #include "Polynomial.h"
 #include "Util.h"
 
-#include <chrono>         // std::chrono::milliseconds
-
-int main() {
-    //auto t1 = std::chrono::high_resolution_clock::now();
-    //auto t2 = std::chrono::high_resolution_clock::now();
-    //auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
-    //std::cout << duration << std::endl;
-    //std::cout << std::this_thread::get_id() << std::endl;
-
-    Polynomial p = Polynomial({-4,-2,1});
-    //Polynomial q = Polynomial({1,2,3,4,5,6,7});
-    p.Print();
-    p.NewtonsMethod(-100, 1e-10);
-    p.Print();
-    //std::cout << "*\n";
-    //q.Print();
-    //std::cout << "=\n";
-    Polynomial r = Polynomial::PolyDerivative(p);
-    r.Print();
-    return 0;
-}
-
 Polynomial::Polynomial(const std::vector<double> &A) { 
     if (A.empty()) {
         m_degree = 0;
@@ -112,10 +90,9 @@ Polynomial Polynomial::PolyMult(const Polynomial &p, const Polynomial &q,
     std::vector<double> out_real(num_coeffs);
     /*
         Since we started with a real polynomial, the IFFT should have no imaginary part.
-        Due to lack of precision, the imaginary part may be nonzero, but we can safely ignore it.
+        Due to lack of precision, the imaginary part may be nonzero, so we can safely ignore it.
 
-        We need a reliable way of hiding the imprecision in the real part. 
-        Currently, I just add and then subtract 10 to truncate any really small errors. 
+        Use some rounding to hide the imprecision in the real part. 
     */
     std::transform( out.begin(), 
                     out.begin() + num_coeffs, 
@@ -227,7 +204,6 @@ Polynomial::PolyPair Polynomial::PolyDiv(const Polynomial &f, const Polynomial &
     return PolyPair(qR, r);
 }
 
-// todo check
 std::vector<double> Polynomial::PolyInterpolate(const std::vector<PtValPair> &points) {
     uint32_t N = points.size();
     std::vector<double> L(N);

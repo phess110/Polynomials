@@ -1,7 +1,15 @@
 #pragma once
-
 #include <complex>
 #include <vector>
+
+/*
+    Provides some useful functionality that's not inherently tied to the Polynomial class.
+*/
+
+/*
+    Suggested TODO
+    Use FFT/Convolution to implement string pattern matching (with/without wildcards)
+*/
 
 typedef std::complex<double> cd;
 const double PI = 3.1415926535897932384626;
@@ -28,8 +36,14 @@ double roundError(double x);
 */
 uint32_t bit_reverse(uint32_t v, uint32_t s);
 
-/* Iterative Fast Fourier Transform */
+/* 
+    Iterative Fast Fourier Transform 
+    Note: The size(a) should be a power of 2.
+*/
 std::vector<cd> FFT(const std::vector<double> &a);
 
-/* Iterative Inverse Fast Fourier Transform */
+/* 
+    Iterative Inverse Fast Fourier Transform 
+    Note: The size(a) should be a power of 2.
+ */
 std::vector<cd> InverseFFT(const std::vector<cd> &a);

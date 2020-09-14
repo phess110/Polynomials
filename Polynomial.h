@@ -5,6 +5,12 @@
 
 #include "Util.h"
 
+
+/* Suggested TODOs
+    - Implement polynomial antiderivative and definite integral
+    - 
+*/
+
 class Polynomial
 {
 private:
@@ -13,18 +19,25 @@ private:
 
     static std::vector<cd> PolyMultHelper(const Polynomial &, uint32_t);
 
-    /* Proper Usage. ALL INPUT POLYNOMIALS SHOULD HAVE INTEGER COEFFICIENTS!
+    /*  Proper Usage:
+        While input coefficients are allowed to be doubles, 
+        it's best to only use this with integer coefficients. 
+
         For a polynomial with rational coefficients: f(x) = p0/q0 + ... + p(n)/q(n) x^n
-        Find the common denominator: d = lcm(q0,...,q(n))
-        Write f as a polynomial with integer coefficients: f(x) = 1/d * (a0 + ... + a(n)x^n).
+        find the common denominator: d = lcm(q0,...,q(n)).
+        Factor out 1/d to write f as a polynomial with integer coefficients: f(x) = 1/d * (a0 + ... + a(n)x^n).
         Perform desired operations on a0 + ... + a(n)x^n and then scale output by 1/d.
     */
 
     /* 
         Reverses the coefficients of the polynomial.
         Equivalent to computing x^n * p(1/x)
+        param[in]: the polynomial to be reversed
     */
     static Polynomial ReversePolynomial(const Polynomial &); 
+
+    /* Reverses coefficients of the polynomial in-place */
+    void Reverse();
 
 public:
     typedef std::pair<Polynomial, Polynomial> PolyPair;
@@ -76,7 +89,9 @@ public:
     */
     static std::vector<double> PolyInterpolate(const std::vector<PtValPair> &);
 
-    /* Returns the polynomial corresponding to the derivative of the input */
+    /* Returns the polynomial corresponding to the derivative of the input 
+        param[in]: the polynomial to be differentiated
+    */
     static Polynomial PolyDerivative(const Polynomial &);
 
     /* Polynomial operator overloads */
@@ -111,9 +126,6 @@ public:
         Differentiates the polynomial
     */
     void PolyDifferentiate();
-
-    /* Reverses coefficients of the polynomial */
-    void Reverse(); // TODO make private
 
     /* Prints the polynomial to stdout */
     void Print() const;
