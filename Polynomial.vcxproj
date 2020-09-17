@@ -123,11 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryHeap.cpp" />
     <ClCompile Include="Polynomial.cpp" />
     <ClCompile Include="PolyValGenerator.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BinaryHeap.h" />
     <ClInclude Include="PolyValGenerator.h" />
     <ClInclude Include="Util.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

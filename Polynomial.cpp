@@ -103,7 +103,7 @@ Polynomial Polynomial::PolyMult(const Polynomial &p, const Polynomial &q,
 
 Polynomial Polynomial::PolyInverse(const Polynomial &p, uint32_t t) {
     if (p[0] == 0) {
-        throw "Inverse does not exist";
+        throw std::invalid_argument("Inverse does not exist");
     }
 
     uint32_t m = 1;
