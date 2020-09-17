@@ -7,7 +7,6 @@
 
 
 /* Suggested TODOs
-    - Implement polynomial antiderivative and definite integral
     - 
 */
 
@@ -94,6 +93,12 @@ public:
     */
     static Polynomial PolyDerivative(const Polynomial &);
 
+    /*
+        Returns the antiderivative of the given polynomial
+        with 0 as the constant term.
+    */
+    static Polynomial PolyAntiDerivative(const Polynomial &);
+
     /* Polynomial operator overloads */
     Polynomial operator*(const double &d) const;
     Polynomial operator*(const Polynomial &p) const;
@@ -127,8 +132,13 @@ public:
     */
     void PolyDifferentiate();
 
+    /*
+        Computes the definite integral of the polynomial over the given interval.
+    */
+    double PolyIntegrate(double, double) const;
+
     /* Prints the polynomial to stdout */
-    void Print() const;
+    void PolyPrint() const;
 
 };
 

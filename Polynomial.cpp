@@ -237,6 +237,18 @@ Polynomial Polynomial::PolyDerivative(const Polynomial &p) {
     }
 }
 
+// todo needs testing
+Polynomial Polynomial::PolyAntiDerivative(const Polynomial &p) {
+    uint32_t deg = p.m_degree + 2;
+    std::vector<double> anti(deg);
+    anti[0] = 0;
+    for (uint32_t i = 1; i < deg; i++) {
+        anti[i] = p[i - 1] / static_cast<double>(i);
+    }
+
+    return Polynomial(anti);
+}
+
 double Polynomial::PolyEval(double x) const {
     if (m_degree == 0) {
         return m_coeffs[0];
@@ -260,6 +272,12 @@ void Polynomial::PolyDifferentiate() {
         m_degree--;
         m_coeffs.pop_back();
     }
+}
+
+// todo needs testing
+double Polynomial::PolyIntegrate(double s, double e) const {
+    Polynomial a = PolyAntiDerivative(*this);
+    return a.PolyEval(e) - a.PolyEval(s);
 }
 
 double Polynomial::NewtonsMethod(double guess, 
@@ -295,7 +313,7 @@ void Polynomial::Reverse() {
 }
 
 
-void Polynomial::Print() const {
+void Polynomial::PolyPrint() const {
     for (uint32_t i = 0; i < m_degree; i++) {
         std::cout << m_coeffs[i] << "x^" << i << " + ";
     }
