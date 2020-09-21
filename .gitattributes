@@ -1,3 +1,5 @@
 *.tex linguist-detectable=false
 *.html linguist-detectable=false
 *.sty linguist-detectable=false
+*.js linguist-detectable=false
+*.css linguist-detectable=false
