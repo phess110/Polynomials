@@ -1,0 +1,68 @@
+\hypertarget{class_poly_val_generator}{}\doxysection{Poly\+Val\+Generator Class Reference}
+\label{class_poly_val_generator}\index{PolyValGenerator@{PolyValGenerator}}
+
+
+The purpose of this class is to provide an efficient way of evaluating an interpolated polynomial without actually having to compute the coefficients of that polynomial.  
+
+
+
+
+{\ttfamily \#include $<$Poly\+Val\+Generator.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_poly_val_generator_af73792740fdb7053e2cd1124543eb2b6}{Poly\+Val\+Generator}} (const std\+::vector$<$ \mbox{\hyperlink{struct_pt_val_pair}{Pt\+Val\+Pair}} $>$ \&)
+\item 
+\mbox{\Hypertarget{class_poly_val_generator_a7114abdfaf713f9afa2330741e3f2b4d}\label{class_poly_val_generator_a7114abdfaf713f9afa2330741e3f2b4d}} 
+{\bfseries Poly\+Val\+Generator} (const \mbox{\hyperlink{class_poly_val_generator}{Poly\+Val\+Generator}} \&)=delete
+\item 
+\mbox{\hyperlink{class_poly_val_generator_a4bbea2ffa41aa61b16dea73f90df2166}{Poly\+Val\+Generator}} (const \mbox{\hyperlink{class_poly_val_generator}{Poly\+Val\+Generator}} \&\&) noexcept
+\item 
+double \mbox{\hyperlink{class_poly_val_generator_a0344301cea47fc13d6815351a004b238}{Eval}} (double x) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_poly_val_generator_a37e11a7059233d458e312dc0333767e3}\label{class_poly_val_generator_a37e11a7059233d458e312dc0333767e3}} 
+std\+::vector$<$ double $>$ {\bfseries m\+\_\+inputs}
+\item 
+\mbox{\Hypertarget{class_poly_val_generator_a4e70900627e4f25ffda83de0132f9223}\label{class_poly_val_generator_a4e70900627e4f25ffda83de0132f9223}} 
+std\+::vector$<$ double $>$ {\bfseries m\+\_\+outputs}
+\item 
+\mbox{\Hypertarget{class_poly_val_generator_ac844cf92890ef4815b17eddf28b5cb81}\label{class_poly_val_generator_ac844cf92890ef4815b17eddf28b5cb81}} 
+std\+::vector$<$ double $>$ {\bfseries m\+\_\+L}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The purpose of this class is to provide an efficient way of evaluating an interpolated polynomial without actually having to compute the coefficients of that polynomial. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_poly_val_generator_af73792740fdb7053e2cd1124543eb2b6}\label{class_poly_val_generator_af73792740fdb7053e2cd1124543eb2b6}} 
+\index{PolyValGenerator@{PolyValGenerator}!PolyValGenerator@{PolyValGenerator}}
+\index{PolyValGenerator@{PolyValGenerator}!PolyValGenerator@{PolyValGenerator}}
+\doxysubsubsection{\texorpdfstring{PolyValGenerator()}{PolyValGenerator()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Poly\+Val\+Generator\+::\+Poly\+Val\+Generator (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_pt_val_pair}{Pt\+Val\+Pair}} $>$ \&}]{A }\end{DoxyParamCaption})}
+
+Constructs a generator using \mbox{\hyperlink{class_polynomial_a79a9a0258ddd94b4b768c307f7f332a1}{Polynomial\+::\+Poly\+Interpolate}} to compute the coefficients \mbox{\Hypertarget{class_poly_val_generator_a4bbea2ffa41aa61b16dea73f90df2166}\label{class_poly_val_generator_a4bbea2ffa41aa61b16dea73f90df2166}} 
+\index{PolyValGenerator@{PolyValGenerator}!PolyValGenerator@{PolyValGenerator}}
+\index{PolyValGenerator@{PolyValGenerator}!PolyValGenerator@{PolyValGenerator}}
+\doxysubsubsection{\texorpdfstring{PolyValGenerator()}{PolyValGenerator()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Poly\+Val\+Generator\+::\+Poly\+Val\+Generator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_poly_val_generator}{Poly\+Val\+Generator}} \&\&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+Move Constructor 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_poly_val_generator_a0344301cea47fc13d6815351a004b238}\label{class_poly_val_generator_a0344301cea47fc13d6815351a004b238}} 
+\index{PolyValGenerator@{PolyValGenerator}!Eval@{Eval}}
+\index{Eval@{Eval}!PolyValGenerator@{PolyValGenerator}}
+\doxysubsubsection{\texorpdfstring{Eval()}{Eval()}}
+{\footnotesize\ttfamily double Poly\+Val\+Generator\+::\+Eval (\begin{DoxyParamCaption}\item[{double}]{x }\end{DoxyParamCaption}) const}
+
+Evaluates the generator at the point x 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Poly\+Val\+Generator.\+h\item 
+Poly\+Val\+Generator.\+cpp\end{DoxyCompactItemize}

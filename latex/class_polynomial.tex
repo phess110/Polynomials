@@ -1,0 +1,383 @@
+\hypertarget{class_polynomial}{}\doxysection{Polynomial Class Reference}
+\label{class_polynomial}\index{Polynomial@{Polynomial}}
+
+
+Represents a polynomial as a list of coefficients.  
+
+
+
+
+{\ttfamily \#include $<$Polynomial.\+h$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_polynomial_a2f2a9a02455456567864c9316dfbba92}\label{class_polynomial_a2f2a9a02455456567864c9316dfbba92}} 
+typedef std\+::pair$<$ \mbox{\hyperlink{class_polynomial}{Polynomial}}, \mbox{\hyperlink{class_polynomial}{Polynomial}} $>$ {\bfseries Poly\+Pair}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_polynomial_a8cae0f6a46da1fbb576ad6f4a46555b8}{Polynomial}} (const std\+::vector$<$ double $>$ \&)
+\item 
+\mbox{\hyperlink{class_polynomial_a1e8cb8f8e5fbd2caead2b4f784b766ab}{Polynomial}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&)
+\item 
+\mbox{\hyperlink{class_polynomial_a55f9c35cfae6c4e5a1b316935ec8ad64}{Polynomial}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&\&p) noexcept
+\item 
+\mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_ae987216e6103c605ec7ad00160329a2d}{operator$\ast$}} (const double \&d) const
+\item 
+\mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_a96cf2e8daf9298a075732ec294cb95cc}{operator$\ast$}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&p) const
+\item 
+Polynomial\+::\+Poly\+Pair \mbox{\hyperlink{class_polynomial_abb4c4b151f010f73de92b649cd08e917}{operator/}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&q) const
+\item 
+\mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_a925477e0924b80c9a4bcc8907e12b24e}{operator-\/}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&q) const
+\item 
+\mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_af14f8d509d178c82b2ba0257d71b6ff0}{operator+}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&q) const
+\item 
+double \mbox{\hyperlink{class_polynomial_ad5c35f89d28de8a982ec05785892cb2a}{operator\mbox{[}$\,$\mbox{]}}} (const size\+\_\+t \&i) const
+\item 
+\mbox{\hyperlink{class_polynomial}{Polynomial}} \& \mbox{\hyperlink{class_polynomial_a33e7ee707c37e76a78ec3f80da4e12a2}{operator=}} (\mbox{\hyperlink{class_polynomial}{Polynomial}} \&\&other) noexcept
+\item 
+double \mbox{\hyperlink{class_polynomial_a35845c9378c1a485d7f3d7c9085687ee}{Newtons\+Method}} (double, double tolerance=1e-\/6, uint32\+\_\+t max\+\_\+iters=1e3) const
+\begin{DoxyCompactList}\small\item\em Newton\textquotesingle{}s Method for root finding. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_polynomial_a345642696205ae8eb84125d76c4d6a99}{Poly\+Eval}} (double) const
+\begin{DoxyCompactList}\small\item\em Horner\textquotesingle{}s method to evaluate polynomial at a point. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polynomial_a33d665334ca12beea99ac733026dc043}\label{class_polynomial_a33d665334ca12beea99ac733026dc043}} 
+void \mbox{\hyperlink{class_polynomial_a33d665334ca12beea99ac733026dc043}{Poly\+Differentiate}} ()
+\begin{DoxyCompactList}\small\item\em Differentiates the polynomial in-\/place. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_polynomial_a3f2554156ce921979f8478307c41a576}{Poly\+Integrate}} (double, double) const
+\begin{DoxyCompactList}\small\item\em Computes the definite integral of the polynomial over the given interval. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polynomial_abf80422ef4df906911a4bb3e35ba64cb}\label{class_polynomial_abf80422ef4df906911a4bb3e35ba64cb}} 
+void \mbox{\hyperlink{class_polynomial_abf80422ef4df906911a4bb3e35ba64cb}{Poly\+Print}} () const
+\begin{DoxyCompactList}\small\item\em Prints the polynomial to stdout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_a40e8790e5c29422f59325bbd2ae9672c}{Poly\+Mult}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&, const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&, uint8\+\_\+t pow1=1, uint8\+\_\+t pow2=1)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_polynomial}{Polynomial}} Multiplication via F\+FT. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_a90e73576b1ee8e552ccaa9d1eec3e14c}{Poly\+Inverse}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&, uint32\+\_\+t)
+\begin{DoxyCompactList}\small\item\em Compute inverse series of a polynomial. \end{DoxyCompactList}\item 
+static Poly\+Pair \mbox{\hyperlink{class_polynomial_a272bd476bb9e66137e419f6246e66e2f}{Poly\+Div}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&, const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_polynomial}{Polynomial}} division. \end{DoxyCompactList}\item 
+static std\+::vector$<$ double $>$ \mbox{\hyperlink{class_polynomial_a79a9a0258ddd94b4b768c307f7f332a1}{Poly\+Interpolate}} (const std\+::vector$<$ \mbox{\hyperlink{struct_pt_val_pair}{Pt\+Val\+Pair}} $>$ \&)
+\begin{DoxyCompactList}\small\item\em Computes the Lagrange Coefficients. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_aef0885fae408228ed73d5f002f753505}{Poly\+Derivative}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&)
+\item 
+static \mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_a33f9eaff401100907a0eee60a8d7cf2c}{Poly\+Anti\+Derivative}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_polynomial_a1e7e214d6f1bb64d3ece93e461076b18}{Reverse}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_polynomial_a4bcc61e2e9d63e476f5e54c3c2739514}\label{class_polynomial_a4bcc61e2e9d63e476f5e54c3c2739514}} 
+static std\+::vector$<$ cd $>$ {\bfseries Poly\+Mult\+Helper} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&, uint32\+\_\+t)
+\item 
+static \mbox{\hyperlink{class_polynomial}{Polynomial}} \mbox{\hyperlink{class_polynomial_a25ed90e8e222c2fd057659d23f69309a}{Reverse\+Polynomial}} (const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&)
+\begin{DoxyCompactList}\small\item\em Equivalent to computing $ x^n * p(1/x) $. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_polynomial_a67e77ed96a49e4f16be5c6be158e7e24}\label{class_polynomial_a67e77ed96a49e4f16be5c6be158e7e24}} 
+std\+::vector$<$ double $>$ {\bfseries m\+\_\+coeffs}
+\item 
+\mbox{\Hypertarget{class_polynomial_a97ee229c3d06e3678dff54d8b36b3d00}\label{class_polynomial_a97ee229c3d06e3678dff54d8b36b3d00}} 
+size\+\_\+t {\bfseries m\+\_\+degree}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a polynomial as a list of coefficients. 
+
+\begin{DoxyRemark}{Remarks}
+Proper Usage\+: While input coefficients are allowed to be doubles, it\textquotesingle{}s best to only use this with integer coefficients.
+
+For a polynomial with rational coefficients\+: $ f(x) = p_0/q_0 + ... + p_n/q_n x^n $, find the common denominator\+: $ d = \mathrm{lcm}(q_0,...,q_n) $. Factor out $ 1/d $ to write f as a polynomial with integer coefficients\+: $ f(x) = 1/d * (a_0 + ... + a_nx^n) $ Perform desired operations on $ a_0 + ... + a_nx^n $ and then scale output by $ 1/d $. 
+\end{DoxyRemark}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_polynomial_a8cae0f6a46da1fbb576ad6f4a46555b8}\label{class_polynomial_a8cae0f6a46da1fbb576ad6f4a46555b8}} 
+\index{Polynomial@{Polynomial}!Polynomial@{Polynomial}}
+\index{Polynomial@{Polynomial}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{Polynomial()}{Polynomial()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Polynomial\+::\+Polynomial (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{A }\end{DoxyParamCaption})}
+
+Constructor 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em A} & the vector of the polynomial\textquotesingle{}s coefficients\+: $ p(x) = \sum a_n x^n $ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_polynomial_a1e8cb8f8e5fbd2caead2b4f784b766ab}\label{class_polynomial_a1e8cb8f8e5fbd2caead2b4f784b766ab}} 
+\index{Polynomial@{Polynomial}!Polynomial@{Polynomial}}
+\index{Polynomial@{Polynomial}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{Polynomial()}{Polynomial()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Polynomial\+::\+Polynomial (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{p }\end{DoxyParamCaption})}
+
+Copy Constructor \mbox{\Hypertarget{class_polynomial_a55f9c35cfae6c4e5a1b316935ec8ad64}\label{class_polynomial_a55f9c35cfae6c4e5a1b316935ec8ad64}} 
+\index{Polynomial@{Polynomial}!Polynomial@{Polynomial}}
+\index{Polynomial@{Polynomial}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{Polynomial()}{Polynomial()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Polynomial\+::\+Polynomial (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&\&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+Move Constructor 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_polynomial_a35845c9378c1a485d7f3d7c9085687ee}\label{class_polynomial_a35845c9378c1a485d7f3d7c9085687ee}} 
+\index{Polynomial@{Polynomial}!NewtonsMethod@{NewtonsMethod}}
+\index{NewtonsMethod@{NewtonsMethod}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{NewtonsMethod()}{NewtonsMethod()}}
+{\footnotesize\ttfamily double Polynomial\+::\+Newtons\+Method (\begin{DoxyParamCaption}\item[{double}]{guess,  }\item[{double}]{tolerance = {\ttfamily 1e-\/6},  }\item[{uint32\+\_\+t}]{max\+\_\+iters = {\ttfamily 1e3} }\end{DoxyParamCaption}) const}
+
+
+
+Newton\textquotesingle{}s Method for root finding. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em guess} & the initial guess for the root \\
+\hline
+\mbox{\texttt{ in}}  & {\em tolerance} & Optional. Default value\+: 1e-\/6 \\
+\hline
+\mbox{\texttt{ in}}  & {\em max\+\_\+iters} & Optional. Default value\+: 1000\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the calculated root 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynomial_ae987216e6103c605ec7ad00160329a2d}\label{class_polynomial_ae987216e6103c605ec7ad00160329a2d}} 
+\index{Polynomial@{Polynomial}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{const double \&}]{d }\end{DoxyParamCaption}) const}
+
+Polynomial-\/scalar multiplication \mbox{\Hypertarget{class_polynomial_a96cf2e8daf9298a075732ec294cb95cc}\label{class_polynomial_a96cf2e8daf9298a075732ec294cb95cc}} 
+\index{Polynomial@{Polynomial}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{p }\end{DoxyParamCaption}) const}
+
+Polynomial-\/polynomial multiplication \mbox{\Hypertarget{class_polynomial_af14f8d509d178c82b2ba0257d71b6ff0}\label{class_polynomial_af14f8d509d178c82b2ba0257d71b6ff0}} 
+\index{Polynomial@{Polynomial}!operator+@{operator+}}
+\index{operator+@{operator+}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{q }\end{DoxyParamCaption}) const}
+
+Polynomial-\/polynomial addition \mbox{\Hypertarget{class_polynomial_a925477e0924b80c9a4bcc8907e12b24e}\label{class_polynomial_a925477e0924b80c9a4bcc8907e12b24e}} 
+\index{Polynomial@{Polynomial}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{q }\end{DoxyParamCaption}) const}
+
+Polynomial-\/polynomial subtraction \mbox{\Hypertarget{class_polynomial_abb4c4b151f010f73de92b649cd08e917}\label{class_polynomial_abb4c4b151f010f73de92b649cd08e917}} 
+\index{Polynomial@{Polynomial}!operator/@{operator/}}
+\index{operator/@{operator/}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}}
+{\footnotesize\ttfamily Polynomial\+::\+Poly\+Pair Polynomial\+::operator/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{q }\end{DoxyParamCaption}) const}
+
+Polynomial-\/polynomial division \mbox{\Hypertarget{class_polynomial_a33e7ee707c37e76a78ec3f80da4e12a2}\label{class_polynomial_a33e7ee707c37e76a78ec3f80da4e12a2}} 
+\index{Polynomial@{Polynomial}!operator=@{operator=}}
+\index{operator=@{operator=}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} \& Polynomial\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynomial}{Polynomial}} \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+Move assignment operator \mbox{\Hypertarget{class_polynomial_ad5c35f89d28de8a982ec05785892cb2a}\label{class_polynomial_ad5c35f89d28de8a982ec05785892cb2a}} 
+\index{Polynomial@{Polynomial}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily double Polynomial\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const size\+\_\+t \&}]{i }\end{DoxyParamCaption}) const}
+
+\mbox{\hyperlink{class_polynomial}{Polynomial}} coefficient indexing \mbox{\Hypertarget{class_polynomial_a33f9eaff401100907a0eee60a8d7cf2c}\label{class_polynomial_a33f9eaff401100907a0eee60a8d7cf2c}} 
+\index{Polynomial@{Polynomial}!PolyAntiDerivative@{PolyAntiDerivative}}
+\index{PolyAntiDerivative@{PolyAntiDerivative}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{PolyAntiDerivative()}{PolyAntiDerivative()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::\+Poly\+Anti\+Derivative (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em p} & the polynomial to integrate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the antiderivative of p with 0 as the constant term. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynomial_aef0885fae408228ed73d5f002f753505}\label{class_polynomial_aef0885fae408228ed73d5f002f753505}} 
+\index{Polynomial@{Polynomial}!PolyDerivative@{PolyDerivative}}
+\index{PolyDerivative@{PolyDerivative}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{PolyDerivative()}{PolyDerivative()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::\+Poly\+Derivative (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em p} & the polynomial to be differentiated \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the polynomial corresponding to the derivative of the input 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynomial_a272bd476bb9e66137e419f6246e66e2f}\label{class_polynomial_a272bd476bb9e66137e419f6246e66e2f}} 
+\index{Polynomial@{Polynomial}!PolyDiv@{PolyDiv}}
+\index{PolyDiv@{PolyDiv}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{PolyDiv()}{PolyDiv()}}
+{\footnotesize\ttfamily Polynomial\+::\+Poly\+Pair Polynomial\+::\+Poly\+Div (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{f,  }\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{\hyperlink{class_polynomial}{Polynomial}} division. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em f} & the dividend \\
+\hline
+\mbox{\texttt{ in}}  & {\em g} & the divisor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+two polynomials, q(x) and r(x), such that $ f(x) = q(x)g(x) + r(x) $ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynomial_a345642696205ae8eb84125d76c4d6a99}\label{class_polynomial_a345642696205ae8eb84125d76c4d6a99}} 
+\index{Polynomial@{Polynomial}!PolyEval@{PolyEval}}
+\index{PolyEval@{PolyEval}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{PolyEval()}{PolyEval()}}
+{\footnotesize\ttfamily double Polynomial\+::\+Poly\+Eval (\begin{DoxyParamCaption}\item[{double}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Horner\textquotesingle{}s method to evaluate polynomial at a point. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em x} & the point to evaluate the polynomial at \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+p(x) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynomial_a3f2554156ce921979f8478307c41a576}\label{class_polynomial_a3f2554156ce921979f8478307c41a576}} 
+\index{Polynomial@{Polynomial}!PolyIntegrate@{PolyIntegrate}}
+\index{PolyIntegrate@{PolyIntegrate}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{PolyIntegrate()}{PolyIntegrate()}}
+{\footnotesize\ttfamily double Polynomial\+::\+Poly\+Integrate (\begin{DoxyParamCaption}\item[{double}]{s,  }\item[{double}]{e }\end{DoxyParamCaption}) const}
+
+
+
+Computes the definite integral of the polynomial over the given interval. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & the starting point \\
+\hline
+\mbox{\texttt{ in}}  & {\em e} & the end point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the integral of the polynomial from s to e 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynomial_a79a9a0258ddd94b4b768c307f7f332a1}\label{class_polynomial_a79a9a0258ddd94b4b768c307f7f332a1}} 
+\index{Polynomial@{Polynomial}!PolyInterpolate@{PolyInterpolate}}
+\index{PolyInterpolate@{PolyInterpolate}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{PolyInterpolate()}{PolyInterpolate()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Polynomial\+::\+Poly\+Interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_pt_val_pair}{Pt\+Val\+Pair}} $>$ \&}]{points }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Computes the Lagrange Coefficients. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em points} & A vector of point-\/value pairs $ \{(x_i,y_i)\} $ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector $ L_i(x) = y_i \prod_{j \neq i} \frac{1}{x_i-x_j} $
+\end{DoxyReturn}
+Define $ P_i(x) = \prod_{j \neq i} \frac{x-x_j}{x_i-x_j} $. Then the interpolated polynomial is $ P_{interp} = \sum_{i=1}^{n+1} y_iP_i(x) $
+
+\begin{DoxyNote}{Note}
+For numerical stability, I don\textquotesingle{}t optimize the calculation of the L\+\_\+i\textquotesingle{}s 
+\end{DoxyNote}
+\mbox{\Hypertarget{class_polynomial_a90e73576b1ee8e552ccaa9d1eec3e14c}\label{class_polynomial_a90e73576b1ee8e552ccaa9d1eec3e14c}} 
+\index{Polynomial@{Polynomial}!PolyInverse@{PolyInverse}}
+\index{PolyInverse@{PolyInverse}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{PolyInverse()}{PolyInverse()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::\+Poly\+Inverse (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{p,  }\item[{uint32\+\_\+t}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Compute inverse series of a polynomial. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em p} & the polynomial to be inverted \\
+\hline
+\mbox{\texttt{ in}}  & {\em t} & a positive integer, the number of terms of its inverse to compute \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the power series of the inverse of the polynomial to desired number of terms
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+the constant term p(0) M\+U\+ST be non-\/zero. 
+\end{DoxyWarning}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & Occurs when p(0) = 0 \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{class_polynomial_a40e8790e5c29422f59325bbd2ae9672c}\label{class_polynomial_a40e8790e5c29422f59325bbd2ae9672c}} 
+\index{Polynomial@{Polynomial}!PolyMult@{PolyMult}}
+\index{PolyMult@{PolyMult}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{PolyMult()}{PolyMult()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::\+Poly\+Mult (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{p,  }\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{q,  }\item[{uint8\+\_\+t}]{pow1 = {\ttfamily 1},  }\item[{uint8\+\_\+t}]{pow2 = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{\hyperlink{class_polynomial}{Polynomial}} Multiplication via F\+FT. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em p} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em q} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em pow1} & the power of p. Optional. Default = 1 \\
+\hline
+\mbox{\texttt{ in}}  & {\em pow2} & the power of q. Optional. Default = 1 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the polynomial $ p(x)^{pow1} * q(x)^{pow2} $ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynomial_a1e7e214d6f1bb64d3ece93e461076b18}\label{class_polynomial_a1e7e214d6f1bb64d3ece93e461076b18}} 
+\index{Polynomial@{Polynomial}!Reverse@{Reverse}}
+\index{Reverse@{Reverse}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{Reverse()}{Reverse()}}
+{\footnotesize\ttfamily void Polynomial\+::\+Reverse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Reverses coefficients of the polynomial in-\/place \mbox{\Hypertarget{class_polynomial_a25ed90e8e222c2fd057659d23f69309a}\label{class_polynomial_a25ed90e8e222c2fd057659d23f69309a}} 
+\index{Polynomial@{Polynomial}!ReversePolynomial@{ReversePolynomial}}
+\index{ReversePolynomial@{ReversePolynomial}!Polynomial@{Polynomial}}
+\doxysubsubsection{\texorpdfstring{ReversePolynomial()}{ReversePolynomial()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynomial}{Polynomial}} Polynomial\+::\+Reverse\+Polynomial (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynomial}{Polynomial}} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Equivalent to computing $ x^n * p(1/x) $. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em p} & the polynomial to be reversed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the polynomial with the coefficients of p reversed 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Polynomial.\+h\item 
+Polynomial.\+cpp\end{DoxyCompactItemize}

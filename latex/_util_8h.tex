@@ -1,0 +1,101 @@
+\hypertarget{_util_8h}{}\doxysection{Util.\+h File Reference}
+\label{_util_8h}\index{Util.h@{Util.h}}
+
+
+Provides some useful functionality that\textquotesingle{}s not inherently tied to the \mbox{\hyperlink{class_polynomial}{Polynomial}} class.  
+
+
+{\ttfamily \#include $<$complex$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_pt_val_pair}{Pt\+Val\+Pair}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_util_8h_a5ce3d5c706fe6c5a216e16b106252fa9}{ceildiv2}}(x)~((x $>$$>$ 1) + (x \& 1));
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_util_8h_a986b4b087695de4bcc0d74eabc8bb444}\label{_util_8h_a986b4b087695de4bcc0d74eabc8bb444}} 
+typedef std\+::complex$<$ double $>$ {\bfseries cd}
+\item 
+\mbox{\Hypertarget{_util_8h_a9eec4f72f9d8353124662e5fbf31b610}\label{_util_8h_a9eec4f72f9d8353124662e5fbf31b610}} 
+typedef struct \mbox{\hyperlink{struct_pt_val_pair}{Pt\+Val\+Pair}} {\bfseries Pt\+Val\+Pair}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_util_8h_ae54c0ca532a20803fe64fc3317e0efb2}{pow2\+\_\+round}} (uint32\+\_\+t i)
+\item 
+double \mbox{\hyperlink{_util_8h_a184c57d2862c9d21426146f3cbf3aa7e}{round\+Error}} (double x)
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_util_8h_aaa8745e3a65fed21328d615a00289d26}{bit\+\_\+reverse}} (uint32\+\_\+t v, uint32\+\_\+t s)
+\item 
+std\+::vector$<$ cd $>$ \mbox{\hyperlink{_util_8h_a59056d45e3e96b0823d7aa42b3cf5d1e}{F\+FT}} (const std\+::vector$<$ double $>$ \&a)
+\item 
+std\+::vector$<$ cd $>$ \mbox{\hyperlink{_util_8h_a22237f55b5ce0c0798f934d4d8a751d9}{Inverse\+F\+FT}} (const std\+::vector$<$ cd $>$ \&a)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_util_8h_a952eac791b596a61bba0a133a3bb439f}\label{_util_8h_a952eac791b596a61bba0a133a3bb439f}} 
+const double {\bfseries PI} = 3.\+1415926535897932384626
+\item 
+\mbox{\Hypertarget{_util_8h_a9fd6b95c1e5aede2fbbfacacfb38bd99}\label{_util_8h_a9fd6b95c1e5aede2fbbfacacfb38bd99}} 
+const double {\bfseries T\+AU} = 6.\+283185307179586476925
+\item 
+\mbox{\Hypertarget{_util_8h_ac29df3dcbefa1ce189e5990bde994025}\label{_util_8h_ac29df3dcbefa1ce189e5990bde994025}} 
+const double {\bfseries epsilon} = 1e-\/6
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides some useful functionality that\textquotesingle{}s not inherently tied to the \mbox{\hyperlink{class_polynomial}{Polynomial}} class. 
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_util_8h_a5ce3d5c706fe6c5a216e16b106252fa9}\label{_util_8h_a5ce3d5c706fe6c5a216e16b106252fa9}} 
+\index{Util.h@{Util.h}!ceildiv2@{ceildiv2}}
+\index{ceildiv2@{ceildiv2}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{ceildiv2}{ceildiv2}}
+{\footnotesize\ttfamily \#define ceildiv2(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~((x $>$$>$ 1) + (x \& 1));}
+
+Return the ceil(x/2) of integer x 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_util_8h_aaa8745e3a65fed21328d615a00289d26}\label{_util_8h_aaa8745e3a65fed21328d615a00289d26}} 
+\index{Util.h@{Util.h}!bit\_reverse@{bit\_reverse}}
+\index{bit\_reverse@{bit\_reverse}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{bit\_reverse()}{bit\_reverse()}}
+{\footnotesize\ttfamily uint32\+\_\+t bit\+\_\+reverse (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{v,  }\item[{uint32\+\_\+t}]{s }\end{DoxyParamCaption})}
+
+Reverse the bits of v. v will be treated an an s-\/bit number. \mbox{\Hypertarget{_util_8h_a59056d45e3e96b0823d7aa42b3cf5d1e}\label{_util_8h_a59056d45e3e96b0823d7aa42b3cf5d1e}} 
+\index{Util.h@{Util.h}!FFT@{FFT}}
+\index{FFT@{FFT}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{FFT()}{FFT()}}
+{\footnotesize\ttfamily std\+::vector$<$cd$>$ F\+FT (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{a }\end{DoxyParamCaption})}
+
+Iterative Fast Fourier Transform Note\+: The size(a) should be a power of 2. \mbox{\Hypertarget{_util_8h_a22237f55b5ce0c0798f934d4d8a751d9}\label{_util_8h_a22237f55b5ce0c0798f934d4d8a751d9}} 
+\index{Util.h@{Util.h}!InverseFFT@{InverseFFT}}
+\index{InverseFFT@{InverseFFT}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{InverseFFT()}{InverseFFT()}}
+{\footnotesize\ttfamily std\+::vector$<$cd$>$ Inverse\+F\+FT (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ cd $>$ \&}]{a }\end{DoxyParamCaption})}
+
+Iterative Inverse Fast Fourier Transform Note\+: The size(a) should be a power of 2. \mbox{\Hypertarget{_util_8h_ae54c0ca532a20803fe64fc3317e0efb2}\label{_util_8h_ae54c0ca532a20803fe64fc3317e0efb2}} 
+\index{Util.h@{Util.h}!pow2\_round@{pow2\_round}}
+\index{pow2\_round@{pow2\_round}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{pow2\_round()}{pow2\_round()}}
+{\footnotesize\ttfamily uint32\+\_\+t pow2\+\_\+round (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{i }\end{DoxyParamCaption})}
+
+Rounds i up to nearest power of 2 \mbox{\Hypertarget{_util_8h_a184c57d2862c9d21426146f3cbf3aa7e}\label{_util_8h_a184c57d2862c9d21426146f3cbf3aa7e}} 
+\index{Util.h@{Util.h}!roundError@{roundError}}
+\index{roundError@{roundError}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{roundError()}{roundError()}}
+{\footnotesize\ttfamily double round\+Error (\begin{DoxyParamCaption}\item[{double}]{x }\end{DoxyParamCaption})}
+
+If x is within epsilon of an integer, round x 

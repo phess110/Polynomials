@@ -10,6 +10,22 @@
     - 
 */
 
+
+
+/*! 
+    \class Polynomial
+
+    \brief Represents a polynomial as a list of coefficients. 
+
+    \remark Proper Usage: While input coefficients are allowed to be doubles, 
+    it's best to only use this with integer coefficients.
+
+    \remark For a polynomial with rational coefficients: \f$ f(x) = p_0/q_0 + ... + p_n/q_n x^n \f$,
+    find the common denominator: \f$ d = \mathrm{lcm}(q_0,...,q_n) \f$.
+    Factor out \f$ 1/d \f$ to write f as a polynomial with integer coefficients: \f$ f(x) = 1/d * (a_0 + ... + a_nx^n) \f$
+    Perform desired operations on \f$ a_0 + ... + a_nx^n \f$ and then scale output by \f$ 1/d \f$.
+*/
+
 class Polynomial
 {
 private:
@@ -18,126 +34,143 @@ private:
 
     static std::vector<cd> PolyMultHelper(const Polynomial &, uint32_t);
 
-    /*  Proper Usage:
-        While input coefficients are allowed to be doubles, 
-        it's best to only use this with integer coefficients. 
-
-        For a polynomial with rational coefficients: f(x) = p0/q0 + ... + p(n)/q(n) x^n
-        find the common denominator: d = lcm(q0,...,q(n)).
-        Factor out 1/d to write f as a polynomial with integer coefficients: f(x) = 1/d * (a0 + ... + a(n)x^n).
-        Perform desired operations on a0 + ... + a(n)x^n and then scale output by 1/d.
-    */
-
-    /* 
-        Reverses the coefficients of the polynomial.
-        Equivalent to computing x^n * p(1/x)
-        param[in]: the polynomial to be reversed
+    /*! 
+        \brief Equivalent to computing \f$ x^n * p(1/x) \f$
+        \param [in] p the polynomial to be reversed
+        \return the polynomial with the coefficients of p reversed
     */
     static Polynomial ReversePolynomial(const Polynomial &); 
 
-    /* Reverses coefficients of the polynomial in-place */
+    /*! Reverses coefficients of the polynomial in-place */
     void Reverse();
 
 public:
     typedef std::pair<Polynomial, Polynomial> PolyPair;
 
-    /* Constructor 
-        Param [in]: vector A, the polynomial's coefficients: p(x) = sum a_n x^n.
+    /*! Constructor 
+        \param [in] A the vector of the polynomial's coefficients: \f$ p(x) = \sum a_n x^n \f$
     */
     Polynomial(const std::vector<double> &);
 
-    /* Copy Constructor */
+    /*! Copy Constructor */
     Polynomial(const Polynomial &);
 
-    /* Move Constructor */
+    /*! Move Constructor */
     Polynomial(const Polynomial &&p) noexcept;
 
-    /* Polynomial Multiplication via FFT
-        param[in]: p, q
-        param[in]: pow1, the power on p
-        param[in]: pow2, the power on q
-        return: the polynomial p(x)^pow1 * q(x)^pow2
+    /*! 
+        \brief Polynomial Multiplication via FFT
+        \param [in] p
+        \param [in] q
+        \param [in] pow1 the power of p. Optional. Default = 1
+        \param [in] pow2 the power of q. Optional. Default = 1
+        \return the polynomial \f$ p(x)^{pow1} * q(x)^{pow2} \f$
     */
     static Polynomial PolyMult(const Polynomial &, const Polynomial &, 
                                 uint8_t pow1 = 1, uint8_t pow2 = 1);
+    
+    /*!
+        \brief Compute inverse series of a polynomial
+        \param [in] p the polynomial to be inverted
+        \param [in] t a positive integer, the number of terms of its inverse to compute
+        \return the power series of the inverse of the polynomial to desired number of terms 
 
-    /* Compute the power series of the inverse of the polynomial to desired number of terms 
-        param[in]: polynomial p to be inverted
-        param[in]: positive integer t, the number of terms of its inverse to compute
-        
-        Note: the constant term p(0) MUST be non-zero. Otherwise, no inverse exists and the function aborts.
+        \warning the constant term p(0) MUST be non-zero.
+        \throw std::invalid_argument Occurs when p(0) = 0
     */
     static Polynomial PolyInverse(const Polynomial &, uint32_t);
 
-    /* Polynomial Division
+    /*! 
+        \brief Polynomial division
 
-        param[in]: f, g 
-        return: two polynomials, q(x) and r(x), such that f(x) = q(x)g(x) + r(x) 
+        \param [in] f the dividend
+        \param [in] g the divisor
+        \return two polynomials, q(x) and r(x), such that \f$ f(x) = q(x)g(x) + r(x) \f$ 
      */
     static PolyPair PolyDiv(const Polynomial &, const Polynomial &);
 
-    /*  Compute the Lagrange Coefficients 
+    /*!  
+        \brief Computes the Lagrange Coefficients 
         
-        param[in]: A vector of point-value pairs {(x_i,y_i)}
-        return: A vector L_i(x) = y_i * prod(j != i, 1/(x_i-x_j))
+        \param [in] points A vector of point-value pairs \f$ \{(x_i,y_i)\} \f$
+        \return A vector \f$ L_i(x) = y_i  \prod_{j \neq i} \frac{1}{x_i-x_j} \f$ 
 
-        P_i(x) = prod(j != i, (x-x_j)/(x_i-x_j))
-        P_interp = sum(i=1,n+1, y_iP_i(x))
+        \details Define \f$ P_i(x) = \prod_{j \neq i} \frac{x-x_j}{x_i-x_j} \f$. Then the interpolated
+        polynomial is \f$ P_{interp} = \sum_{i=1}^{n+1} y_iP_i(x) \f$
 
-        For numerical stability, I don't optimize the calculation of the L_i's
+        \note For numerical stability, I don't optimize the calculation of the L_i's
     */
     static std::vector<double> PolyInterpolate(const std::vector<PtValPair> &);
 
-    /* Returns the polynomial corresponding to the derivative of the input 
-        param[in]: the polynomial to be differentiated
+    /*!
+        \param [in] p the polynomial to be differentiated
+        \return the polynomial corresponding to the derivative of the input 
     */
     static Polynomial PolyDerivative(const Polynomial &);
 
-    /*
-        Returns the antiderivative of the given polynomial
-        with 0 as the constant term.
+    /*!
+        \param [in] p the polynomial to integrate
+        \return the antiderivative of p with 0 as the constant term.
     */
     static Polynomial PolyAntiDerivative(const Polynomial &);
 
     /* Polynomial operator overloads */
+
+    /*! Polynomial-scalar multiplication */
     Polynomial operator*(const double &d) const;
+
+    /*! Polynomial-polynomial multiplication */
     Polynomial operator*(const Polynomial &p) const;
+
+    /*! Polynomial-polynomial division */
     Polynomial::PolyPair operator/(const Polynomial &q) const;
+
+    /*! Polynomial-polynomial subtraction */
     Polynomial operator-(const Polynomial &q) const;
+
+    /*! Polynomial-polynomial addition */
     Polynomial operator+(const Polynomial &q) const;
+
+    /*! Polynomial coefficient indexing */
     double operator[](const size_t &i) const;
 
-    /* Move assignment operator */
+    /*! Move assignment operator */
     Polynomial &operator=(Polynomial &&other) noexcept;
 
-    /* Newton's Method for root finding. 
-       param[in]: the initial guess for the root
-       param[in]: (optional) tolerance. Default value: 1e-9
-       param[in]: (optional) max_iters. Default value: 1000
+    /*! 
+       \brief Newton's Method for root finding. 
+       \param [in] guess the initial guess for the root
+       \param [in] tolerance Optional. Default value: 1e-6
+       \param [in] max_iters Optional. Default value: 1000
+
+       \return the calculated root
     */
     double NewtonsMethod(double, 
                          double tolerance = 1e-6, 
                          uint32_t max_iters = 1e3) const;
 
-    /*
-        Horner's method to evaluate polynomial at x.
+    /*!
+        \brief Horner's method to evaluate polynomial at a point.
 
-        param[in]: double x 
-        return: p(x)
+        \param [in] x the point to evaluate the polynomial at
+        \return p(x)
     */
     double PolyEval(double) const;
 
-    /* 
-        Differentiates the polynomial
+    /*! 
+        \brief Differentiates the polynomial in-place
     */
     void PolyDifferentiate();
 
-    /*
-        Computes the definite integral of the polynomial over the given interval.
+    /*!
+        \brief Computes the definite integral of the polynomial over the given interval.
+        \param [in] s the starting point
+        \param [in] e the end point
+        \return the integral of the polynomial from s to e
     */
     double PolyIntegrate(double, double) const;
 
-    /* Prints the polynomial to stdout */
+    /*! \brief Prints the polynomial to stdout */
     void PolyPrint() const;
 
 };

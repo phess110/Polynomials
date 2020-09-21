@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage{ifthen}
+\usepackage{epsfig}
+\usepackage[utf8]{inputenc}
+\usepackage{newunicodechar}
+  \newunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \newunicodechar{²}{${}^{2}$}% Superscript two
+  \newunicodechar{³}{${}^{3}$}% Superscript three
+
+\pagestyle{empty}
+\begin{document}
+$ p(x) = sum a_n x^n $
+\pagebreak
+
+$ p(x)^pow1 * q(x)^pow2 $
+\pagebreak
+
+$ P_i(x) = \prod_{j \neq i} \frac{x-x_j}{x_i-x_j} $
+\pagebreak
+
+$ P_{interp} = \sum_{i=1}^{n+1} y_iP_i(x) $
+\pagebreak
+
+\end{document}

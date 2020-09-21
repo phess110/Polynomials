@@ -9,8 +9,9 @@
 // If desired we could implement a custom compare function 
 // for comparing non-numerical keys
 
-// For creaign a max heap, use
-// max_heap_comp<K> as the Compare template arg
+/*! For creating a max heap, use
+     max_heap_comp<K> as the Compare template arg
+*/
 template<typename K>
 struct max_heap_comp {
     bool operator()(const K &a, const K &b) const {
@@ -18,7 +19,7 @@ struct max_heap_comp {
     }
 };
 
-// For min heap
+//! For min heap
 template<typename K>
 struct min_heap_comp {
     bool operator()(const K &a, const K &b) const {
@@ -26,6 +27,14 @@ struct min_heap_comp {
     }
 };
 
+/*! 
+    \brief Templated class for a binary heap data structure
+    \tparam K the key data type
+    \tparam V the value data type
+    \tparam Compare A struct containing a callable comparision operator
+
+    \details The heap is implemented using a vector of key-value pairs
+*/
 template<typename K, typename V, typename Compare>
 class BinaryHeap
 {
@@ -33,6 +42,10 @@ private:
     std::vector<std::pair<K, V>> m_heap;
     Compare m_comparator;
 
+
+    /*!
+        Maintain heap property by bubbling the node at index i upward
+    */
     void BubbleUp(size_t idx) {
         size_t p = parent(idx);
         while (m_comparator(m_heap[idx].first, m_heap[p].first)) {
@@ -42,6 +55,9 @@ private:
         }
     }
 
+    /*!
+        Maintain heap property by bubbling the node at index i downward
+    */
     void BubbleDown(size_t idx) {
         size_t n = m_heap.size();
         size_t l = lchild(idx);
@@ -70,6 +86,11 @@ private:
 
 public:
     BinaryHeap() { }
+
+    /*!
+        \brief Constructs a binary heap given two lists of keys and corresponding values
+        \throw user-error If the two lists do not have the same number of values
+    */
     BinaryHeap(const std::vector<K> &keys, const std::vector<V> &vals) {
         if (keys.size() != vals.size()) {
             throw "Must have same number of keys and values.";
@@ -81,12 +102,21 @@ public:
         }
     }
 
+    /*!
+        \brief Inserts the given key-value pair into the heap
+        \param [in] key 
+        \param [in] val
+    */
     void Insert(const K &key, const V &val) {
         size_t n = m_heap.size();
         m_heap.push_back(std::make_pair(key, val));
         BubbleUp(n);
     }
 
+    /*!
+        \return The element at the top of the heap
+        \throw std::length_error If the heap is empty
+    */
     const V &GetTop() const {
         if (m_heap.size() > 0) {
             return m_heap[0].second;
@@ -96,6 +126,11 @@ public:
         }
     }
 
+    /*!
+        \brief Removes the top element from the heap and returns its value
+        \return The element at the top of the heap
+        \throw std::length_error If the heap is empty
+    */
     V Pop() {
         size_t n = m_heap.size();
         if (n > 0) {
@@ -110,6 +145,10 @@ public:
         }
     }
 
+    /*!
+        \param [in] idx Location of the value to be changed
+        \param [in] new_key The value the key is to be updated to
+    */
     void ChangeKey(size_t idx, const K &new_key) {
         if (m_comparator(new_key, m_heap[idx].first)) {
             m_heap[idx].first = new_key;
